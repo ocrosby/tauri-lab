@@ -17,10 +17,11 @@ void main() {
   float r = length(p);
   float a = atan(p.y, p.x);
 
+  // hot-reload demo: edit these numbers and save — the window updates live
   vec3 col = 0.5 + 0.5 * cos(
-    u_time + a * 3.0 + r * 6.0 + vec3(0.0, 2.0, 4.0)
+    u_time * 2.0 + a * 8.0 + r * 3.0 + vec3(2.0, 4.0, 0.0)
   );
 
-  col *= smoothstep(1.2, 0.0, r);
+  col *= smoothstep(1.4, 0.1, r);
   gl_FragColor = vec4(col, 1.0);
 }
