@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="titlebar" data-tauri-drag-region>
+      <span class="title">Window management</span>
+      <div class="titlebar-buttons">
+        <button id="min" title="Minimize">−</button>
+        <button id="max" title="Maximize">□</button>
+        <button id="close" title="Close">×</button>
+      </div>
+    </div>
+
+    <main>
+      <h1>Window management</h1>
+
+      <section>
+        <h2>Child window</h2>
+        <button id="open-child">Open child window</button>
+        <button id="close-child">Close child window</button>
+        <button id="ping-child">Ping child</button>
+      </section>
+
+      <section>
+        <h2>Move main window</h2>
+        <button id="move-top-left">Top-left (0,0)</button>
+        <button id="center">Re-center</button>
+      </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPC commands</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>IPC commands</h1>
+
+      <section>
+        <h2>Counter (managed state)</h2>
+        <p>Value: <output id="counter">0</output></p>
+        <button data-action="dec">-</button>
+        <button data-action="inc">+</button>
+        <button data-action="reset">reset</button>
+      </section>
+
+      <section>
+        <h2>Calculator (Result&lt;f64, String&gt;)</h2>
+        <input id="dividend" type="number" value="10" step="any" />
+        <span>÷</span>
+        <input id="divisor" type="number" value="3" step="any" />
+        <button id="divide">=</button>
+        <output id="quotient">?</output>
+      </section>
+
+      <section>
+        <h2>Slow greet (async, 1s sleep)</h2>
+        <button id="slow">Call slow_greet</button>
+        <output id="slow-result">idle</output>
+      </section>
+    </main>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

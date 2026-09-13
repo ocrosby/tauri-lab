@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Child window</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Child window</h1>
+      <p>Label: <code>child</code></p>
+      <p>Last ping from parent: <output id="ping">—</output></p>
+    </main>
+    <script type="module">
+      const { listen } = window.__TAURI__.event;
+      const pingEl = document.getElementById("ping");
+      await listen("ping-from-parent", (event) => {
+        pingEl.textContent = `${event.payload} (at ${new Date().toLocaleTimeString()})`;
+      });
+    </script>
+  </body>
+</html>

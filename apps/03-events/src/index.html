@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Events</h1>
+
+      <section>
+        <h2>Download simulation (Rust → JS)</h2>
+        <div class="bar"><div id="bar-fill"></div></div>
+        <p>Progress: <output id="pct">0</output>%</p>
+        <button id="start">Start</button>
+        <button id="cancel" disabled>Cancel</button>
+        <output id="status">idle</output>
+      </section>
+
+      <section>
+        <h2>Background clock (Rust → JS on startup)</h2>
+        <p>Ticks received: <output id="ticks">0</output></p>
+        <p>Latest tick: <output id="latest-tick">—</output></p>
+      </section>
+    </main>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

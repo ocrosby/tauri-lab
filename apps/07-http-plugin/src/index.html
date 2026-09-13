@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTTP plugin</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>HTTP plugin</h1>
+
+      <section>
+        <h2>Allowed: api.quotable.io</h2>
+        <button id="fetch-quote">Fetch quote</button>
+        <blockquote id="quote">—</blockquote>
+        <p id="author"></p>
+      </section>
+
+      <section>
+        <h2>Denied: wttr.in (not in scope)</h2>
+        <p>
+          The URL is not listed in <code>capabilities/default.json</code>, so
+          the plugin rejects the request before it's dispatched.
+        </p>
+        <button id="fetch-weather">Fetch weather</button>
+        <pre id="weather"></pre>
+      </section>
+    </main>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
