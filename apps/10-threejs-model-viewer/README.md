@@ -78,6 +78,27 @@ You could build a glTF viewer as a plain web page — but you'd have to use `<in
 - No CORS
 - Later: watch a directory for new files, associate `.glb` extension with the app, drag-drop from Finder
 
+## Dev-time auto-load (`?autoload=<path>`)
+
+For scripted testing you can skip the file picker by passing a URL query param. Two ways to set it:
+
+**Via `tauri.conf.json`** (persistent for that build):
+
+```json
+"windows": [{
+  "label": "main",
+  "url": "index.html?autoload=/tmp/tauri-lab-samples/Duck.glb"
+}]
+```
+
+**From devtools** (one-shot, in the running window):
+
+```js
+location.search = "?autoload=/tmp/tauri-lab-samples/Duck.glb"
+```
+
+If the path doesn't exist or the read fails, the HUD shows `autoload failed: <error>` and the app is otherwise unchanged. Without the param, startup is a no-op — the demo behaves exactly as before.
+
 ## Try changing
 
 - Add a **drag-and-drop** handler: `document.body.addEventListener("drop", ...)` with `event.dataTransfer.files`. The file has a `path` field in Tauri.
