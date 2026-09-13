@@ -97,6 +97,26 @@ function countTriangles(root) {
   return Math.round(n);
 }
 
+// Optional auto-load: pass ?autoload=<absolute-path> in the window URL.
+// Activate by setting windows[0].url in tauri.conf.json, or from devtools:
+//   location.search = "?autoload=/tmp/tauri-lab-samples/Duck.glb"
+const autoloadPath = new URLSearchParams(window.location.search).get("autoload");
+if (autoloadPath) {
+  try {
+    const bytes = await readFile(autoloadPath);
+    const gltf = await loader.parseAsync(bytes.buffer, "");
+    scene.remove(currentModel);
+    currentModel = gltf.scene;
+    scene.add(currentModel);
+    frameObject(currentModel);
+    const filename = autoloadPath.split(/[\\/]/).pop();
+    const triangles = countTriangles(currentModel);
+    infoEl.textContent = `${filename} · ${triangles.toLocaleString()} triangles (auto-loaded)`;
+  } catch (err) {
+    infoEl.textContent = `autoload failed: ${err}`;
+  }
+}
+
 renderer.setAnimationLoop(() => {
   controls.update();
   renderer.render(scene, camera);
