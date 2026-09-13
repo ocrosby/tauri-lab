@@ -22,7 +22,7 @@ Need a `.glb` to test with? [KhronosGroup/glTF-Sample-Models](https://github.com
 
 ## Read the code in this order
 
-1. **`src-tauri/capabilities/default.json`** — permissions: `dialog:allow-open` + `fs:allow-read-file`. **No scope** on the fs read because we only read the specific path the dialog handed us. That path came from a user gesture, which the plugin trusts.
+1. **`src-tauri/capabilities/default.json`** — permissions: `dialog:default` + `fs:allow-read-file` + an `fs:scope` allowing `/tmp/**`. The dialog plugin auto-grants a runtime scope for the exact path the user picks, so `fs:allow-read-file` alone would cover the "Open…" flow. The `/tmp/**` scope exists only so the [dev-time autoload](#dev-time-auto-load-autoloadpath) can read the Khronos sample without user interaction. If you don't use autoload, delete the scope.
 2. **`src/main.js`**:
    - `open({ filters: [...] })` — native picker
    - `readFile(path)` — returns a `Uint8Array` of the file bytes
@@ -78,26 +78,32 @@ You could build a glTF viewer as a plain web page — but you'd have to use `<in
 - No CORS
 - Later: watch a directory for new files, associate `.glb` extension with the app, drag-drop from Finder
 
-## Dev-time auto-load (`?autoload=<path>`)
+## Dev-time auto-load (`#autoload=<path>`)
 
-For scripted testing you can skip the file picker by passing a URL query param. Two ways to set it:
+For scripted testing you can skip the file picker by passing a URL fragment. The frontend accepts either `?autoload=` (query) or `#autoload=` (fragment), but **only the fragment survives Tauri v2's `windows[].url` config** — query strings get stripped when the URL is passed through the `App(path)` variant.
 
 **Via `tauri.conf.json`** (persistent for that build):
 
 ```json
 "windows": [{
   "label": "main",
-  "url": "index.html?autoload=/tmp/tauri-lab-samples/Duck.glb"
+  "url": "index.html#autoload=/tmp/tauri-lab-samples/Duck.glb"
 }]
 ```
 
-**From devtools** (one-shot, in the running window):
+**From devtools** (one-shot, in the running window — query form works here because you're setting `location` directly):
 
 ```js
 location.search = "?autoload=/tmp/tauri-lab-samples/Duck.glb"
 ```
 
-If the path doesn't exist or the read fails, the HUD shows `autoload failed: <error>` and the app is otherwise unchanged. Without the param, startup is a no-op — the demo behaves exactly as before.
+**The autoload path must be inside an allowed `fs:scope`.** The default capability grants `/tmp/**`, so the Khronos sample works. If you want to autoload from `$HOME` or elsewhere, widen the scope in `capabilities/default.json`:
+
+```json
+{ "identifier": "fs:scope", "allow": [{ "path": "$HOME/models/**" }] }
+```
+
+If the path is outside the scope, the HUD shows `autoload failed: forbidden path: ...`. If the file doesn't exist, `autoload failed: <read error>`. Without the param, startup is a no-op — the demo behaves like the pristine picker-driven flow.
 
 ## Try changing
 

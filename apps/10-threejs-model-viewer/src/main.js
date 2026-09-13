@@ -97,10 +97,14 @@ function countTriangles(root) {
   return Math.round(n);
 }
 
-// Optional auto-load: pass ?autoload=<absolute-path> in the window URL.
-// Activate by setting windows[0].url in tauri.conf.json, or from devtools:
-//   location.search = "?autoload=/tmp/tauri-lab-samples/Duck.glb"
-const autoloadPath = new URLSearchParams(window.location.search).get("autoload");
+// Optional auto-load: pass ?autoload=<absolute-path> or #autoload=<absolute-path>
+// in the window URL. Fragment form is preferred — Tauri v2's App(path) URL
+// config strips query strings, so the ?query form only works if you set the
+// hash from devtools. The autoload path must be inside a permitted fs scope
+// (see capabilities/default.json — this demo scopes /tmp/** for the sample).
+const autoloadPath =
+  new URLSearchParams(window.location.search).get("autoload") ||
+  new URLSearchParams(window.location.hash.slice(1)).get("autoload");
 if (autoloadPath) {
   try {
     const bytes = await readFile(autoloadPath);
