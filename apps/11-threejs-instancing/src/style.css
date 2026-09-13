@@ -1,0 +1,23 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #0e1116;
+  color: #d0d3d8;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+canvas { display: block; }
+
+#hud {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  pointer-events: none;
+  user-select: none;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js instancing</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/three.module.min.js",
+          "three/addons/": "./vendor/three/addons/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="hud">
+      <div><span id="count">0</span> instances · <span id="calls">0</span> draw calls</div>
+      <div><span id="fps">–</span> fps</div>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

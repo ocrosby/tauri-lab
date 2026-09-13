@@ -27,7 +27,8 @@ apps/NN-name/
 ├── src/                    # frontend, served as static files
 │   ├── index.html
 │   ├── main.js
-│   └── style.css
+│   ├── style.css
+│   └── vendor/             # only for demos that vendor a library (Three.js)
 └── src-tauri/              # Rust backend
     ├── Cargo.toml          # unique package name matching demo directory
     ├── tauri.conf.json     # identifier: com.tauri-lab.<name>
@@ -40,6 +41,21 @@ apps/NN-name/
 ```
 
 The `main.rs` / `lib.rs` split is the Tauri 2 convention — `lib.rs` is what mobile targets link against. Do not merge them back into a single `main.rs`.
+
+### Vendoring frontend libraries
+
+When a demo needs a third-party JS library that isn't installable without a bundler (Three.js is the canonical case), commit the library file(s) under `apps/NN-name/src/vendor/<lib>/`. Rules:
+
+- **Pin the version.** Record it in the demo README (e.g. "Three.js r170").
+- **Per-demo copy.** Do NOT symlink or share across demos — Windows symlink support is unreliable and cross-demo coupling defeats the self-contained principle.
+- **Reference via importmap in `index.html`**:
+  ```html
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three/three.module.min.js" } }
+  </script>
+  ```
+  Then in JS: `import * as THREE from "three"`.
+- **Vendor only what the demo uses.** If `08-threejs-basics` doesn't need OrbitControls, don't ship it in that demo's `vendor/`. Each vendor file must be justifiable per demo.
 
 ## Running demos
 
@@ -112,6 +128,8 @@ When a demo teaches a concept that belongs in `docs/`, put the concept in `docs/
 - **Do not consolidate `tauri.conf.json` files.** Config duplication is the price of demo independence.
 - **Do not commit `target/`, `node_modules/`, `dist/`, or icon binaries.** All in `.gitignore`.
 - **Do not commit `Cargo.lock`.** These are demo apps, not libraries or binaries with reproducibility guarantees; the root `.gitignore` excludes them.
+- **Do not fetch vendor libraries from a CDN at runtime.** Vendor into `src/vendor/` and pin the version.
+- **Do not share vendored libraries between demos** via symlink or config trickery. Each demo owns its copy.
 
 ## When the user says "add a demo for X"
 

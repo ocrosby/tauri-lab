@@ -31,6 +31,8 @@ This repo splits the difference. Each demo is a **complete, runnable Tauri app**
 
 ## Demos
 
+**Core Tauri capabilities**
+
 | # | Demo | What it teaches |
 |---|------|-----------------|
 | 01 | [`apps/01-hello-world`](apps/01-hello-world) | Minimal Tauri 2 project: HTML frontend calling a Rust `#[tauri::command]` |
@@ -40,6 +42,16 @@ This repo splits the difference. Each demo is a **complete, runnable Tauri app**
 | 05 | [`apps/05-window-management`](apps/05-window-management) | Multiple windows, custom titlebar, positioning |
 | 06 | [`apps/06-tray-notifications`](apps/06-tray-notifications) | System tray icon + menu + native OS notifications |
 | 07 | [`apps/07-http-plugin`](apps/07-http-plugin) | HTTP requests from Rust via the `http` plugin |
+
+**Three.js integration** (WebGL rendered inside the Tauri webview; Three.js is vendored at `src/vendor/three/`)
+
+| # | Demo | What it teaches |
+|---|------|-----------------|
+| 08 | [`apps/08-threejs-basics`](apps/08-threejs-basics) | Scene / camera / renderer / render loop — the Three.js "hello world" |
+| 09 | [`apps/09-threejs-lighting-materials`](apps/09-threejs-lighting-materials) | PBR materials, three light types, shadow mapping, OrbitControls |
+| 10 | [`apps/10-threejs-model-viewer`](apps/10-threejs-model-viewer) | Load glTF/GLB via the native file picker (`dialog` + `fs` plugins → `GLTFLoader.parseAsync`) |
+| 11 | [`apps/11-threejs-instancing`](apps/11-threejs-instancing) | `InstancedMesh` — 100 k objects in one draw call |
+| 12 | [`apps/12-threejs-shader-hot-reload`](apps/12-threejs-shader-hot-reload) | Rust `notify` file-watcher → live-recompile a `ShaderMaterial` on save |
 
 Each demo has its own `README.md` explaining what it does and how to run it.
 
@@ -96,7 +108,12 @@ tauri-lab/
 │   ├── 04-filesystem-dialog/
 │   ├── 05-window-management/
 │   ├── 06-tray-notifications/
-│   └── 07-http-plugin/
+│   ├── 07-http-plugin/
+│   ├── 08-threejs-basics/         # Three.js demos vendor three.module.min.js
+│   ├── 09-threejs-lighting-materials/
+│   ├── 10-threejs-model-viewer/
+│   ├── 11-threejs-instancing/
+│   └── 12-threejs-shader-hot-reload/
 ├── scripts/
 │   └── generate-icons.sh          # produces placeholder icons for every demo
 └── shared/
@@ -179,6 +196,11 @@ Read the demos in order — each builds on concepts from the previous:
 5. **05-window-management** covers multi-window apps and the difference between windows and webviews.
 6. **06-tray-notifications** turns your app into a background utility.
 7. **07-http-plugin** shows the modern replacement for the deprecated `reqwest`-through-`allowlist` pattern from Tauri 1.
+8. **08-threejs-basics** starts the Three.js track — WebGL runs unchanged in Tauri's webview.
+9. **09-threejs-lighting-materials** adds PBR materials, lights, and shadows.
+10. **10-threejs-model-viewer** combines Three.js with the Tauri file picker — the "why not just a web page" demo.
+11. **11-threejs-instancing** shows the native GPU performance ceiling.
+12. **12-threejs-shader-hot-reload** wires a Rust file-watcher to a live-recompiling shader — impossible in a plain browser.
 
 ## Troubleshooting
 

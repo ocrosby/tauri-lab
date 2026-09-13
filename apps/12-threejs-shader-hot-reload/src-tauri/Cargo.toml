@@ -1,0 +1,20 @@
+[package]
+name = "threejs-shader-hot-reload"
+version = "0.1.0"
+description = "tauri-lab demo 12: Rust file-watcher + Three.js ShaderMaterial hot reload"
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "threejs_shader_hot_reload_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+notify = "6"
+notify-debouncer-mini = "0.4"
